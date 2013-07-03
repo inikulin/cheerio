@@ -37,7 +37,7 @@ describe('$', function() {
 
 
 
-  describe('.load', function() {
+  describe('.loadDocument', function() {
 
     it('(html) : should retain original root after creating a new node', function() {
       var $html = $.load('<body><ul id="fruits"></ul></body>');
@@ -45,24 +45,6 @@ describe('$', function() {
       $html('<script>');
       expect($html('body')).to.have.length(1);
     });
-
-    it('(html) : should handle lowercase tag options', function() {
-      var $html = $.load('<BODY><ul id="fruits"></ul></BODY>', { lowerCaseTags : true });
-      expect($html.html()).to.be('<body><ul id="fruits"></ul></body>');
-    });
-
-    it('(html) : should handle the ignore whitepace option', function() {
-      var $html = $.load('<body><a href="http://yahoo.com">Yahoo</a> <a href="http://google.com">Google</a></body>', { ignoreWhitespace : true });
-      expect($html.html()).to.be('<body><a href="http://yahoo.com">Yahoo</a><a href="http://google.com">Google</a></body>');
-    });
-
-    // TODO:
-    // it('(html) : should handle xml tag option', function() {
-    //   var $html = $.load('<body><script>oh hai</script></body>', { xmlMode : true });
-    //   console.log($html('script')[0].type);
-    //   expect($html('script')[0].type).to.be('tag');
-    // });
-
   });
 
 
@@ -86,7 +68,7 @@ describe('$', function() {
     it('() : should return a cheerio-wrapped root object', function() {
       var $html = $.load('<div><span>foo</span><span>bar</span></div>');
       $html.root().append('<div id="test"></div>');
-      expect($html.html()).to.equal('<div><span>foo</span><span>bar</span></div><div id="test"></div>');
+      expect($html.html()).to.equal('<html><head></head><body><div><span>foo<span>bar</span></span></div></body></html><div id="test"></div>');
     });
 
   });

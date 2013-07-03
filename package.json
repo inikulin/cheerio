@@ -1,28 +1,36 @@
 {
-  "author": "Matt Mueller <mattmuelle@gmail.com> (mattmueller.me)",
-  "name": "cheerio",
-  "description": "Tiny, fast, and elegant implementation of core jQuery designed specifically for the server",
-  "keywords": ["htmlparser", "jquery", "selector", "scraper"],
-  "version": "0.12.0",
-  "repository":   {
-    "type": "git",
-    "url": "git://github.com/MatthewMueller/cheerio.git"
-  },
-  "main": "./index.js",
-  "engines": {
-    "node": ">= 0.6"
-  },
-  "dependencies": {
-    "cheerio-select" : "*",
-    "htmlparser2" : "3.1.1",
-    "underscore" : "~1.4",
-    "entities" : "0.x"
-  },
-  "devDependencies": {
-    "mocha" : "*",
-    "expect.js" : "*"
-  },
-  "scripts": {
-    "test" : "make test"
-  }
+    "author": "Matt Mueller <mattmuelle@gmail.com> (mattmueller.me)",
+    "contributors": [
+        {
+            "name": "Ivan Nikulin",
+            "email": "ifaaan@gmail.com",
+            "url": "https://github.com/inikulin"
+        }
+    ],
+    "name": "whacko",
+    "description": "Cheerio (http://matthewmueller.github.com/cheerio/) fork that uses parse5 HTML-parser (https://github.com/inikulin/parse5) as an underlying platform ",
+    "keywords": ["htmlparser", "jquery", "selector", "scraper"],
+    "version": "0.12.3",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/inikulin/whacko.git"
+    },
+    "main": "./index.js",
+    "engines": {
+        "node": ">= 0.6"
+    },
+    "dependencies": {
+        "cheerio-select": "*",
+        "parse5": ">=0.5.2",
+        "htmlparser2": "3.1.1",
+        "underscore": "~1.4",
+        "entities": "0.x"
+    },
+    "devDependencies": {
+        "mocha": "*",
+        "expect.js": "*"
+    },
+    "scripts": {
+        "test": "make test"
+    }
 }

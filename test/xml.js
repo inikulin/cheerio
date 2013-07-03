@@ -14,13 +14,13 @@ describe('render', function() {
 
     it('should render <media:thumbnail /> tags correctly', function(done) {
       var str = '<media:thumbnail url="http://www.foo.com/keyframe.jpg" width="75" height="50" time="12:05:01.123" />';
-      expect(xml(str)).to.equal('<media:thumbnail url="http://www.foo.com/keyframe.jpg" width="75" height="50" time="12:05:01.123"/>');
+      expect(xml(str)).to.equal('<html><head/><body><media:thumbnail url="http://www.foo.com/keyframe.jpg" width="75" height="50" time="12:05:01.123"/></body></html>');
       done();
     });
 
     it('should render <link /> tags (RSS) correctly', function(done) {
       var str = '<link>http://www.github.com/</link>';
-      expect(xml(str)).to.equal('<link>http://www.github.com/</link>');
+      expect(xml(str)).to.equal('<html><head><link/></head><body>http://www.github.com/</body></html>');
       done();
     });
 
