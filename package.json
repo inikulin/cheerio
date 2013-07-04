@@ -10,7 +10,7 @@
     "name": "whacko",
     "description": "Cheerio (http://matthewmueller.github.com/cheerio/) fork that uses parse5 HTML-parser (https://github.com/inikulin/parse5) as an underlying platform ",
     "keywords": ["htmlparser", "jquery", "selector", "scraper"],
-    "version": "0.12.4",
+    "version": "0.12.5",
     "repository": {
         "type": "git",
         "url": "git://github.com/inikulin/whacko.git"

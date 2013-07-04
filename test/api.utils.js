@@ -34,14 +34,19 @@ describe('$', function () {
             expect(_$.html('.pear')).to.equal('<li class="pear">Pear</li>');
         });
 
-        it('(element with attr that contains double quotes) : should return the outerHTML of the selected element with single quoted attr', function () {
-            var _$ = $.load('<li class=\'pear"\'></li>');
-            expect(_$.html()).to.equal('<html><head></head><body><li class=\'pear"\'></li></body></html>');
+        it('(element with attrs that contains quotes) : should return the outerHTML with encoded quotes in attributes', function () {
+            var _$ = $.load('<li class=\'&#39;pear"\' style="test\'&quot;"></li>');
+            expect(_$.html()).to.equal('<html><head></head><body><li class="&#39;pear&quot;" style="test&#39;&quot;"></li></body></html>');
         });
 
-        it('(element with attr that contains single quotes) : should return the outerHTML of the selected element with double quoted attr', function () {
-            var _$ = $.load('<li class="pear\'"></li>');
-            expect(_$.html()).to.equal('<html><head></head><body><li class="pear\'"></li></body></html>');
+        it('(element that contains escaped HTML in inner text) : should be rendered correctly with escaped text', function () {
+            var _$ = $.load('<div>&lt;span&gt; A&amp;B &lt;span&gt;</div>');
+            expect(_$.html()).to.equal('<html><head></head><body><div>&lt;span&gt; A&amp;B &lt;span&gt;</div></body></html>');
+        });
+
+        it('(element that contains html-escapable symbols in script and style) : should remain unescaped', function () {
+            var _$ = $.load('<script>var a = 3>2&&1;</script><style>&seletor{}</style>');
+            expect(_$.html()).to.equal('<html><head><script>var a = 3>2&&1;</script><style>&seletor{}</style></head><body></body></html>');
         });
     });
 
