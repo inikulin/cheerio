@@ -1,4 +1,80 @@
 
+0.13.1 / 2014-01-07
+==================
+
+ * Fix select with context in Cheerio function (@jugglinmike)
+ * Remove unecessary DOM maintenance logic (@jugglinmike)
+ * Deprecate support for node 0.6
+
+0.13.0 / 2013-12-30
+==================
+
+ * Remove "root" node (@jugglinmike)
+ * Fix bug in `prevAll`, `prev`, `nextAll`, `next`, `prevUntil`, `nextUntil` (@jugglinmike)
+ * Fix `replaceWith` method (@jugglinmike)
+ * added nextUntil() and prevUntil() (@finspin)
+ * Remove internal `connect` function (@jugglinmike)
+ * Rename `Cheerio#make` to document private status (@jugginmike)
+ * Remove extraneous call to `_.uniq` (@jugglinmike)
+ * Use CSSselect library directly (@jugglinmike)
+ * Run CI against Node v0.11 as an allowed failure (@jugginmike)
+ * Correct bug in `Cheerio#parents` (@jugglinmike)
+ * Implement `$.fn.end` (@jugginmike)
+ * Ignore colons inside of url(.*) when parsing css (@Meekohi)
+ * Introduce rudimentary benchmark suite (@jugglinmike)
+ * Update HtmlParser2 version (@jugglinmike)
+ * Correct inconsistency in `$.fn.map` (@jugglinmike)
+ * fixed traversing tests (@finspin)
+ * Simplify `make` method (@jugglinmike)
+ * Avoid shadowing instance methods from arrays (@jugglinmike)
+
+0.12.4 / 2013-11-12
+==================
+
+ * Coerce JSON values returned by `data` (@jugglinmike)
+ * issue #284: when rendering HTML, use original data attributes (@Trott)
+ * Introduce JSHint for automated code linting (@jugglinmike)
+ * Prevent `find` from returning duplicate elements (@jugglinmike)
+ * Implement function signature of `replaceWith` (@jugglinmike)
+ * Implement function signature of `before` (@jugglinmike)
+ * Implement function signature of `after` (@jugglinmike)
+ * Implement function signature of `append`/`prepend` (@jugglinmike)
+ * Extend iteration methods to accept nodes (@jugglinmike)
+ * Improve `removeClass` (@jugglinmike)
+ * Complete function signature of `addClass` (@jugglinmike)
+ * Fix bug in `removeClass` (@jugglinmike)
+ * Improve contributing.md (@jugglinmike)
+ * Fix and document .css() (@jugglinmike)
+
+0.12.3 / 2013-10-04
+===================
+
+ * Add .toggleClass() function (@cyberthom)
+ * Add contributing guidelines (@jugglinmike)
+ * Fix bug in `siblings` (@jugglinmike)
+ * Correct the implementation `filter` and `is` (@jugglinmike)
+ * add .data() function (@andi-neck)
+ * add .css() (@yields)
+ * Implements contents() (@jlep)
+
+0.12.2 / 2013-09-04
+==================
+
+ * Correct implementation of `$.fn.text` (@jugglinmike)
+ * Refactor Cheerio array creation (@jugglinmike)
+ * Extend manipulation methods to accept Arrays (@jugglinmike)
+ * support .attr(attributeName, function(index, attr)) (@xiaohwan)
+
+0.12.1 / 2013-07-30
+==================
+
+ * Correct behavior of `Cheerio#parents` (@jugglinmike)
+ * Double quotes inside attributes kills HTML (@khoomeister)
+ * Making next({}) and prev({}) return empty object (@absentTelegraph)
+ * Implement $.parseHTML (@jugglinmike)
+ * Correct bug in jQuery.fn.closest (@jugglinmike)
+ * Correct behavior of $.fn.val on 'option' elements (@jugglinmike)
+
 0.12.0 / 2013-06-09
 ===================
 
