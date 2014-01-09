@@ -88,7 +88,7 @@ of the default parsing options:
 
 ```js
 $ = cheerio.load('<ul id="fruits">...</ul>', {
-    ignoreWhitespace: true,
+    normalizeWhitespace: true,
     xmlMode: true
 });
 ```
@@ -98,7 +98,7 @@ are valid in cheerio as well. The default options are:
 
 ```js
 {
-    ignoreWhitespace: false,
+    normalizeWhitespace: false,
     xmlMode: false,
     lowerCaseTags: false
 }
@@ -142,6 +142,23 @@ $('.apple').attr('id', 'favorite').html()
 ```
 
 > See http://api.jquery.com/attr/ for more information
+
+#### .data( name, value )
+Method for getting and setting data attributes. Gets or sets the data attribute value for only the first element in the matched set.
+
+```js
+$('<div data-apple-color="red"></div>').data()
+//=> { appleColor: 'red' }
+
+$('<div data-apple-color="red"></div>').data('data-apple-color')
+//=> 'red'
+
+var apple = $('.apple').data('kind', 'mac')
+apple.data('kind')
+//=> 'mac'
+```
+
+> See http://api.jquery.com/data/ for more information
 
 #### .val( [value] )
 Method for getting and setting the value of input, select, and textarea. Note: Support for `map`, and `function` has not been added yet.
@@ -201,9 +218,24 @@ $('.apple').addClass('red').removeClass().html()
 
 > See http://api.jquery.com/removeClass/ for more information.
 
+#### .toggleClass( className, [switch] )
+Add or remove class(es) from the matched elements, depending on either the class's presence or the value of the switch argument. Also accepts a `function` like jQuery.
+
+```js
+$('.apple.green').toggleClass('fruit green red').html()
+//=> <li class="apple fruit red">Apple</li>
+
+$('.apple.green').toggleClass('fruit green red', true).html()
+//=> <li class="apple green fruit red">Apple</li>
+```
+
+> See http://api.jquery.com/toggleClass/ for more information.
+
 #### .is( selector )
+#### .is( element )
+#### .is( selection )
 #### .is( function(index) )
-Checks the current list of elements and returns `true` if _any_ of the elements match the selector. If using a predicate function, the function is executed in the context of the selected element, so `this` refers to the current element.
+Checks the current list of elements and returns `true` if _any_ of the elements match the selector. If using an element or Cheerio selection, returns `true` if _any_ of the elements match. If using a predicate function, the function is executed in the context of the selected element, so `this` refers to the current element.
 
 
 ### Traversing
@@ -216,8 +248,8 @@ $('#fruits').find('li').length
 //=> 3
 ```
 
-#### .parent()
-Gets the parent of the first selected element.
+#### .parent([selector])
+Get the parent of each element in the current set of matched elements, optionally filtered by a selector.
 
 ```js
 $('.pear').parent().attr('id')
@@ -263,6 +295,14 @@ $('.apple').nextAll()
 //=> [<li class="orange">Orange</li>, <li class="pear">Pear</li>]
 ```
 
+#### .nextUntil()
+Gets all the following siblings up to but not including the element matched by the selector.
+
+```js
+$('.apple').nextUntil('.pear')
+//=> [<li class="orange">Orange</li>]
+```
+
 #### .prev()
 Gets the previous sibling of the first selected element.
 
@@ -277,6 +317,14 @@ Gets all the preceding siblings of the first selected element.
 ```js
 $('.pear').prevAll()
 //=> [<li class="orange">Orange</li>, <li class="apple">Apple</li>]
+```
+
+#### .prevUntil()
+Gets all the preceding siblings up to but not including the element matched by the selector.
+
+```js
+$('.pear').prevUntil('.apple')
+//=> [<li class="orange">Orange</li>]
 ```
 
 #### .slice( start, [end] )
@@ -313,6 +361,14 @@ $('#fruits').children('.pear').text()
 //=> Pear
 ```
 
+#### .contents()
+Gets the children of each element in the set of matched elements, including text and comment nodes.
+
+```js
+$('#fruits').contents().length
+//=> 3
+```
+
 #### .each( function(index, element) )
 Iterates over a cheerio object, executing a function for each matched element. When the callback is fired, the function is fired in the context of the DOM element, so `this` refers to the current element, which is equivalent to the function parameter `element`. To break out of the `each` loop early, return with `false`.
 
@@ -328,19 +384,19 @@ fruits.join(', ');
 ```
 
 #### .map( function(index, element) )
-Iterates over a cheerio object, executing a function for each selected element. Map will return an `array` of return values from each of the functions it iterated over. The function is fired in the context of the DOM element, so `this` refers to the current element, which is equivalent to the function parameter `element`.
+Pass each element in the current matched set through a function, producing a new Cheerio object containing the return values. The function can return an individual data item or an array of data items to be inserted into the resulting set. If an array is returned, the elements inside the array are inserted into the set. If the function returns null or undefined, no element will be inserted.
 
 ```js
 $('li').map(function(i, el) {
   // this === el
-  return $(this).attr('class');
-}).join(', ');
-//=> apple, orange, pear
+  return $('<div>').text($(this).text());
+}).html();
+//=> <div>apple</div><div>orange</div><div>pear</div>
 ```
 
-#### .filter( selector ) <br /> .filter( function(index) )
+#### .filter( selector ) <br /> .filter( selection ) <br /> .filter( element ) <br /> .filter( function(index) )
 
-Iterates over a cheerio object, reducing the set of selector elements to those that match the selector or pass the function's test. If using the function method, the function is executed in the context of the selected element, so `this` refers to the current element.
+Iterates over a cheerio object, reducing the set of selector elements to those that match the selector or pass the function's test. When a Cheerio selection is specified, return only the elements contained in that selection. When an element is specified, return only that element (if it is contained in the original selection). If using the function method, the function is executed in the context of the selected element, so `this` refers to the current element.
 
 Selector:
 
@@ -384,6 +440,14 @@ $('li').eq(0).text()
 
 $('li').eq(-1).text()
 //=> Pear
+```
+
+#### .end()
+End the most recent filtering operation in the current chain and return the set of matched elements to its previous state.
+
+```js
+$('li').eq(0).end().length
+//=> 3
 ```
 
 ### Manipulation
@@ -504,6 +568,10 @@ $('ul').text()
 //    Pear
 ```
 
+#### .css( [propertName] ) <br /> .css( [ propertyNames] ) <br /> .css( [propertyName], [value] ) <br /> .css( [propertName], [function] ) <br /> .css( [properties] )
+
+Get the value of a style property for the first element in the set of matched elements or set one or more CSS properties for every matched element.
+
 ### Rendering
 When you're ready to render the document, you can use the `html` utility function:
 
@@ -569,6 +637,9 @@ $.root().append('<ul id="vegetables"></ul>').html();
 #### $.contains( container, contained )
 Checks to see if the `contained` DOM element is a descendent of the `container` DOM element.
 
+#### $.parseHTML( data [, context ] [, keepScripts ] )
+Parses a string into an array of DOM nodes. The `context` argument has no meaning for Cheerio, but it is maintained for API compatability.
+
 ## Screencasts
 
 http://vimeo.com/31950192
@@ -596,32 +667,47 @@ These are some of the contributors that have made cheerio possible:
 
 ```
 project  : cheerio
-repo age : 1 year, 7 months ago
-commits  : 474
-active   : 141 days
-files    : 27
+repo age : 2 years, 1 month
+active   : 196 days
+commits  : 591
+files    : 32
 authors  :
-  286 Matt Mueller            60.3%
-   80 Matthew Mueller         16.9%
-   42 David Chambers          8.9%
-   15 Siddharth Mahendraker   3.2%
-    7 Adam Bretz              1.5%
-    7 ironchefpython          1.5%
-    6 Mike Pennisi            1.3%
-    5 Jos Shepherd            1.1%
-    5 Ryan Schmukler          1.1%
-    5 Ben Sheldon             1.1%
-    3 jeremy.dentel           0.6%
-    2 alexbardas              0.4%
-    2 Rob Ashton              0.4%
-    2 Wayne Larsen            0.4%
-    1 mattym                  0.2%
-    1 Ben Atkin               0.2%
-    1 Chris O'Hara            0.2%
-    1 Felix Böhm              0.2%
-    1 Rob "Hurricane" Ashton  0.2%
-    1 Simon Boudrias          0.2%
-    1 Sindre Sorhus           0.2%
+ 293  Matt Mueller            49.6%
+ 102  Matthew Mueller         17.3%
+  52  Mike Pennisi            8.8%
+  47  David Chambers          8.0%
+  15  Siddharth Mahendraker   2.5%
+  11  Adam Bretz              1.9%
+   7  ironchefpython          1.2%
+   6  Jarno Leppänen         1.0%
+   5  Ben Sheldon             0.8%
+   5  Ryan Schmukler          0.8%
+   5  Jos Shepherd            0.8%
+   4  Maciej Adwent           0.7%
+   4  Amir Abu Shareb         0.7%
+   3  Felix Böhm             0.5%
+   3  jeremy.dentel@brandingbrand.com 0.5%
+   3  Andi Neck               0.5%
+   2  alexbardas              0.3%
+   2  Ali Farhadi             0.3%
+   2  Thomas Heymann          0.3%
+   2  Wayne Larsen            0.3%
+   2  Rob Ashton              0.3%
+   2  Chris Khoo              0.3%
+   1  xiaohwan                0.2%
+   1  Chris O'Hara            0.2%
+   1  Felix Böhm            0.2%
+   1  Jeremy Hubble           0.2%
+   1  Manuel Alabor           0.2%
+   1  Matt Liegey             0.2%
+   1  Ben Atkin               0.2%
+   1  Rich Trott              0.2%
+   1  Rob "Hurricane" Ashton  0.2%
+   1  Simon Boudrias          0.2%
+   1  Sindre Sorhus           0.2%
+   1  Timm Preetz             0.2%
+   1  mattym                  0.2%
+   1  nevermind               0.2%
 ```
 
 ## Special Thanks
