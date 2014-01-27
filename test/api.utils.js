@@ -36,7 +36,7 @@ describe('$', function () {
 
         it('(element with attrs that contains quotes) : should return the outerHTML with encoded quotes in attributes', function () {
             var _$ = $.load('<li class=\'&#39;pear"\' style="test\'&quot;"></li>');
-            expect(_$.html()).to.equal('<html><head></head><body><li class="&#39;pear&quot;" style="test&#39;&quot;"></li></body></html>');
+            expect(_$.html()).to.equal('<html><head></head><body><li class="\'pear&quot;" style="test\'&quot;"></li></body></html>');
         });
 
         it('(element that contains escaped HTML in inner text) : should be rendered correctly with escaped text', function () {
