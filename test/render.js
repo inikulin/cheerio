@@ -8,6 +8,13 @@ var html = function(str, options) {
   return render(dom);
 };
 
+var xml = function(str, options) {
+  options = options || {};
+  options.xmlMode = true;
+  var dom = parse(str, options);
+  return render(dom, {xmlMode:true});
+};
+
 describe('render', function() {
 
   describe('(html)', function() {
@@ -27,11 +34,6 @@ describe('render', function() {
       expect(html(str)).to.equal('<hr class="cheerio &amp; node = happy parsing">');
     });
 
-    it('should shorten the "checked" attribute when it contains the value "checked"', function() {
-      var str = '<input checked/>';
-      expect(html(str)).to.equal('<input checked>');
-    });
-
     it('should not shorten the "name" attribute when it contains the value "name"', function() {
       var str = '<input name="name"/>';
       expect(html(str)).to.equal('<input name="name">');
@@ -47,16 +49,10 @@ describe('render', function() {
       expect(html(str)).to.equal(str);
     });
 
-    it('should normalize whitespace if specified', function() {
-      var str = '<a href="./haha.html">hi</a> <a href="./blah.html">blah  </a>';
-      expect(html(str, { normalizeWhitespace: true })).to.equal('<a href="./haha.html">hi</a> <a href="./blah.html">blah </a>');
-    });
-
     it('should preserve multiple hyphens in data attributes', function() {
       var str = '<div data-foo-bar-baz="value"></div>';
       expect(html(str)).to.equal('<div data-foo-bar-baz="value"></div>');
     });
-
   });
 
 });

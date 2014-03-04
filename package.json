@@ -9,31 +9,32 @@
     ],
     "name": "whacko",
     "description": "Cheerio (http://matthewmueller.github.com/cheerio/) fork that uses parse5 HTML-parser (https://github.com/inikulin/parse5) as an underlying platform ",
-    "keywords": ["htmlparser", "jquery", "selector", "scraper"],
-<<<<<<< HEAD
-    "version": "0.12.10",
-=======
+    "keywords": [
+        "htmlparser",
+        "jquery",
+        "selector",
+        "scraper",
+        "parser",
+        "html"
+    ],
     "version": "0.13.1",
->>>>>>> 6b328f1023183674a5e01ae94e0cff38d5683e21
     "repository": {
         "type": "git",
-        "url": "git://github.com/inikulin/whacko.git"
+        "url": "git://github.com/MatthewMueller/cheerio.git"
     },
     "main": "./index.js",
     "engines": {
         "node": ">= 0.6"
     },
     "dependencies": {
-        "cheerio-select": "*",
-        "parse5": "0.6.1",
-        "htmlparser2": "3.1.1",
-        "underscore": "~1.4",
-        "entities": "0.x",
-        "CSSselect": "~0.4.0"
+        "parse5": "0.8.3",
+        "entities": "~0.5.0",
+        "CSSselect": "~0.4.0",
+        "lodash": "~2.4.1"
     },
     "devDependencies": {
         "mocha": "*",
-        "expect.js": "*",
+        "expect.js": "~0.3.1",
         "jshint": "~2.3.0",
         "benchmark": "~1.0.0",
         "jsdom": "~0.8.9"

@@ -45,7 +45,6 @@ describe('parse', function() {
       var tag = parse.evaluate(basic)[0];
       expect(tag.type).to.equal('tag');
       expect(tag.name).to.equal('html');
-      expect(tag.children).to.be.empty();
     });
 
     it('should handle sibling tags: ' + siblings, function() {
@@ -77,7 +76,6 @@ describe('parse', function() {
       expect(tag.type).to.equal('tag');
       expect(tag.name).to.equal('html');
       expect(tag.children).to.be.ok();
-      expect(tag.children).to.have.length(1);
     });
 
     it('should handle tags with children: ' + li, function() {
@@ -140,7 +138,7 @@ describe('parse', function() {
     it('should handle directives: ' + directive, function() {
       var elem = parse.evaluate(directive)[0];
       expect(elem.type).to.equal('directive');
-      expect(elem.data).to.equal('!doctype html');
+      expect(elem.data).to.equal('!DOCTYPE html');
       expect(elem.name).to.equal('!doctype');
     });
 
@@ -162,7 +160,7 @@ describe('parse', function() {
     }
 
     it('should add root to: ' + basic, function() {
-      var root = parse(basic);
+      var root = parse(basic, null, true);
       rootTest(root);
       expect(root.children).to.have.length(1);
       expect(root.children[0].name).to.equal('html');
@@ -199,16 +197,15 @@ describe('parse', function() {
     });
 
     it('should add root to: ' + styleEmpty, function() {
-      var root = parse(styleEmpty);
+      var root = parse(styleEmpty, null, true);
       rootTest(root);
       expect(root.children).to.have.length(1);
-      expect(root.children[0].type).to.equal('style');
+      expect(root.children[0].children[0].children[0].type).to.equal('style');
     });
 
     it('should add root to: ' + directive, function() {
       var root = parse(directive);
       rootTest(root);
-      expect(root.children).to.have.length(1);
       expect(root.children[0].type).to.equal('directive');
     });
 

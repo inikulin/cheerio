@@ -1,6 +1,7 @@
 var expect = require('expect.js'),
     $ = require('../'),
-    fruits = require('./fixtures').fruits;
+    fruits = require('./fixtures').fruits,
+    toArray = Function.call.bind(Array.prototype.slice);
 
 describe('$(...)', function() {
 
@@ -30,6 +31,20 @@ describe('$(...)', function() {
       expect($fruits.children(3).hasClass('plum')).to.be.ok();
     });
 
+    it('(existing Node) : should remove node from previous location', function() {
+      var $fruits = $(fruits);
+      var apple = $fruits.children()[0];
+      var $children;
+
+      expect($fruits.children()).to.have.length(3);
+      $fruits.append(apple);
+      $children = $fruits.children();
+
+      expect($children).to.have.length(3);
+      expect($children[0]).to.not.equal(apple);
+      expect($children[2]).to.equal(apple);
+    });
+
     it('($(...), html) : should add multiple elements as last children', function() {
       var $fruits = $(fruits);
       var $plum = $('<li class="plum">Plum</li>');
@@ -54,7 +69,7 @@ describe('$(...)', function() {
       var thisValues = [];
 
       $fruits.append(function() {
-        args.push(arguments);
+        args.push(toArray(arguments));
         thisValues.push(this);
       });
 
@@ -158,6 +173,20 @@ describe('$(...)', function() {
       expect($fruits.children(0).hasClass('plum')).to.be.ok();
     });
 
+    it('(existing Node) : should remove existing nodes from previous locations', function() {
+      var $fruits = $(fruits);
+      var pear = $fruits.children()[2];
+      var $children;
+
+      expect($fruits.children()).to.have.length(3);
+      $fruits.prepend(pear);
+      $children = $fruits.children();
+
+      expect($children).to.have.length(3);
+      expect($children[2]).to.not.equal(pear);
+      expect($children[0]).to.equal(pear);
+    });
+
     it('(Array) : should add all elements in the array as inital children', function() {
       var $fruits = $(fruits);
       var more = $('<li class="plum">Plum</li><li class="grape">Grape</li>')
@@ -182,7 +211,7 @@ describe('$(...)', function() {
       var thisValues = [];
 
       $fruits.prepend(function() {
-        args.push(arguments);
+        args.push(toArray(arguments));
         thisValues.push(this);
       });
 
@@ -287,6 +316,18 @@ describe('$(...)', function() {
       expect($('.apple', $fruits).next().hasClass('plum')).to.be.ok();
     });
 
+    it('(existing Node) : should remove existing nodes from previous locations', function() {
+      var $fruits = $(fruits);
+      var pear = $fruits.children()[2];
+      var $children;
+
+      $('.apple', $fruits).after(pear);
+
+      $children = $fruits.children();
+      expect($children).to.have.length(3);
+      expect($children[1]).to.be(pear);
+    });
+
     it('($(...), html) : should add multiple elements as next siblings', function() {
       var $fruits = $(fruits);
       var $plum = $('<li class="plum">Plum</li>');
@@ -302,7 +343,7 @@ describe('$(...)', function() {
       var thisValues = [];
 
       $fruits.after(function() {
-        args.push(arguments);
+        args.push(toArray(arguments));
         thisValues.push(this);
       });
 
@@ -382,6 +423,18 @@ describe('$(...)', function() {
       expect($('.apple', $fruits).prev().hasClass('plum')).to.be.ok();
     });
 
+    it('(existing Node) : should remove existing nodes from previous locations', function() {
+      var $fruits = $(fruits);
+      var pear = $fruits.children()[2];
+      var $children;
+
+      $('.apple', $fruits).before(pear);
+
+      $children = $fruits.children();
+      expect($children).to.have.length(3);
+      expect($children[0]).to.be(pear);
+    });
+
     it('(Array) : should add all elements in the array as previous sibling', function() {
       var $fruits = $(fruits);
       var more = $('<li class="plum">Plum</li><li class="grape">Grape</li>')
@@ -406,7 +459,7 @@ describe('$(...)', function() {
       var thisValues = [];
 
       $fruits.before(function() {
-        args.push(arguments);
+        args.push(toArray(arguments));
         thisValues.push(this);
       });
 
@@ -537,7 +590,7 @@ describe('$(...)', function() {
       var thisValues = [];
 
       $fruits.children().replaceWith(function() {
-        args.push(arguments);
+        args.push(toArray(arguments));
         thisValues.push(this);
         return '<li class="first">';
       });
