@@ -17,7 +17,7 @@
         "parser",
         "html"
     ],
-    "version": "0.13.2",
+    "version": "0.17.1",
     "repository": {
         "type": "git",
         "url": "git://github.com/MatthewMueller/cheerio.git"
@@ -27,19 +27,18 @@
         "node": ">= 0.6"
     },
     "dependencies": {
-        "parse5": "0.8.3",
-        "entities": "~0.5.0",
+        "parse5": "1.1.6",
         "CSSselect": "~0.4.0",
-        "lodash": "~2.4.1"
+        "lodash": "~2.4.1",
+        "domutils": "1.5"
     },
     "devDependencies": {
-        "mocha": "*",
         "expect.js": "~0.3.1",
-        "jshint": "~2.3.0",
-        "benchmark": "~1.0.0",
-        "jsdom": "~0.8.9"
+        "istanbul": "~0.2",
+        "mocha": "*",
+        "xyz": "~0.4.0"
     },
     "scripts": {
-        "test": "make test"
+        "test": "mocha"
     }
 }

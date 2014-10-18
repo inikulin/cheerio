@@ -43,7 +43,7 @@ describe('cheerio', function() {
     var $h2 = $('<h2>');
     expect($h2).to.not.be.empty();
     expect($h2).to.have.length(1);
-    expect($h2[0].name).to.equal('h2');
+    expect($h2[0].tagName).to.equal('h2');
   });
 
   it('should be able to create complicated html', function() {
@@ -52,17 +52,17 @@ describe('cheerio', function() {
     expect($script).to.have.length(1);
     expect($script[0].attribs.src).to.equal('script.js');
     expect($script[0].attribs.type).to.equal('text/javascript');
-    expect($script[0].children).to.be.empty();
+    expect($script[0].childNodes).to.be.empty();
   });
 
   var testAppleSelect = function($apple) {
     expect($apple).to.have.length(1);
     $apple = $apple[0];
-    expect($apple.parent.name).to.equal('ul');
+    expect($apple.parentNode.tagName).to.equal('ul');
     expect($apple.prev).to.be(null);
     expect($apple.next.attribs['class']).to.equal('orange');
-    expect($apple.children).to.have.length(1);
-    expect($apple.children[0].data).to.equal('Apple');
+    expect($apple.childNodes).to.have.length(1);
+    expect($apple.childNodes[0].data).to.equal('Apple');
   };
 
   it('should be able to select .apple with only a context', function() {
@@ -89,16 +89,17 @@ describe('cheerio', function() {
   it('should be able to select a tag', function() {
     var $ul = $('ul', fruits);
     expect($ul).to.have.length(1);
-    expect($ul[0].name).to.equal('ul');
+    expect($ul[0].tagName).to.equal('ul');
   });
 
-  it('should be able to filter down using the context', function() {
-    var q = $.load(fruits),
-        apple = q('.apple', 'ul'),
-        lis = q('li', 'ul');
+  it('should accept a node reference as a context', function() {
+    var $elems = $('<div><span></span></div>');
+    expect($('span', $elems[0])).to.have.length(1);
+  });
 
-    expect(apple).to.have.length(1);
-    expect(lis).to.have.length(3);
+  it('should accept an array of node references as a context', function() {
+    var $elems = $('<div><span></span></div>');
+    expect($('span', $elems.toArray())).to.have.length(1);
   });
 
   it('should select only elements inside given context (Issue #193)', function() {
@@ -136,7 +137,7 @@ describe('cheerio', function() {
   it('should be able to select multiple classes: $(".btn.primary")', function() {
     var $a = $('.btn.primary', multiclass);
     expect($a).to.have.length(1);
-    expect($a[0].children[0].data).to.equal('Save');
+    expect($a[0].childNodes[0].data).to.equal('Save');
   });
 
   it('should not create a top-level node', function() {
@@ -217,7 +218,7 @@ describe('cheerio', function() {
 
   it('(extended Array) should not interfere with prototype methods (issue #119)', function() {
     var extended = [];
-    var custom = extended.find = extended.children = extended.each = function() {};
+    extended.find = extended.children = extended.each = function() {};
     var $empty = $(extended);
 
     expect($empty.find).to.be($.prototype.find);
@@ -225,4 +226,35 @@ describe('cheerio', function() {
     expect($empty.each).to.be($.prototype.each);
   });
 
+  describe('.load', function() {
+
+    it('should generate selections as proper instances', function() {
+      var q = $.load(fruits);
+
+      expect(q('.apple')).to.be.a(q);
+    });
+
+    it('should be able to filter down using the context', function() {
+      var q = $.load(fruits),
+          apple = q('.apple', 'ul'),
+          lis = q('li', 'ul');
+
+      expect(apple).to.have.length(1);
+      expect(lis).to.have.length(3);
+    });
+
+    it('should allow loading a pre-parsed DOM', function() {
+      var dom = $.parseHTML(food),
+          q = $.load(dom);
+
+      expect(q('ul')).to.have.length(3);
+    });
+
+    it('should return a fully-qualified Function', function() {
+      var $c = $.load('<div>');
+
+      expect($c).to.be.a(Function);
+    });
+
+  });
 });
