@@ -1,5 +1,6 @@
 #Whacko
 [![Build Status](https://api.travis-ci.org/inikulin/whacko.svg)](https://travis-ci.org/inikulin/whacko)
+
 Whacko is a fork of the [cheerio](https://github.com/MatthewMueller/cheerio) that uses [parse5](https://github.com/inikulin/parse5) as an underlying platform.
 
 ##Install
