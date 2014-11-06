@@ -17,7 +17,7 @@
         "parser",
         "html"
     ],
-    "version": "0.17.1",
+    "version": "0.17.2",
     "repository": {
         "type": "git",
         "url": "git://github.com/MatthewMueller/cheerio.git"
@@ -27,7 +27,7 @@
         "node": ">= 0.6"
     },
     "dependencies": {
-        "parse5": "1.1.6",
+        "parse5": "1.2.0",
         "CSSselect": "~0.4.0",
         "lodash": "~2.4.1",
         "domutils": "1.5"
