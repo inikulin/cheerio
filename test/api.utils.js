@@ -33,6 +33,14 @@ describe('cheerio', function() {
       var $ = cheerio.load(fixtures.fruits);
       expect($.html('.pear')).to.equal('<li class="pear">Pear</li>');
     });
+
+    it('() should respect encodeHtmlEntities option', function () {
+      var $ = cheerio.load(fixtures.text, { encodeHtmlEntities: false });
+      expect($.html("p")).to.equal(fixtures.text);
+      $ = cheerio.load(fixtures.text, { encodeHtmlEntities: true });
+      expect($.html("p")).to.equal(fixtures.text.replace(/\&/gi, "&amp;"));
+    });
+
   });
 
 
