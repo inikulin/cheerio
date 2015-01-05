@@ -12,7 +12,7 @@ $ npm install whacko
 Difference with cheerio:
 * Use `$.load(content)` to load HTML documents (e.g. missing `<html>` tags will be automatically emitted in this case).
 * Use `$(content)` to create HTML-fragments which can be later added to the loaded document.
-* Parser options (e.g. `xmlMode` and `normalizeWhitespace`) are missing since whacko is intended for spec compliant HTML parsing.
+* Parser options differ and currently include xmlMode and encodeEntities
 
 In all other aspects it is the same with the [cheerio API](https://github.com/MatthewMueller/cheerio#api).
 
