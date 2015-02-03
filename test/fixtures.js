@@ -49,6 +49,6 @@ exports.inputs = [
 ].join('');
 
 exports.text = [
-  '<p>Apples, <b>oranges</b> and pears.</p>',
-  '<p>Carrots and <!-- sweetcorn --></p>'
+  '<p>Apples, <b>oranges</b> & pears.</p>',
+  '<p>Carrots & <!-- sweetcorn --></p>'
 ].join('');
