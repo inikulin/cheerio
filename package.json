@@ -8,7 +8,7 @@
         }
     ],
     "name": "whacko",
-    "description": "Cheerio (http://matthewmueller.github.com/cheerio/) fork that uses parse5 HTML-parser (https://github.com/inikulin/parse5) as an underlying platform ",
+    "description": "Cheerio (http://cheeriojs.github.io/cheerio/) fork that uses parse5 HTML-parser (https://github.com/inikulin/parse5) as an underlying platform ",
     "keywords": [
         "htmlparser",
         "jquery",
