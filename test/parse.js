@@ -18,6 +18,7 @@ var li = '<li class="durian">Durian</li>';
 // Attributes
 var attributes = '<img src="hello.png" alt="man waving">';
 var noValueAttribute = '<textarea disabled></textarea>';
+var encodedAttributes = '<img data-object="{&quot;foo&quot;:&quot;bar&quot;}">';
 
 // Comments
 var comment = '<!-- sexy -->';
@@ -91,6 +92,28 @@ describe('parse', function() {
       expect(attrs).to.be.ok();
       expect(attrs.src).to.equal('hello.png');
       expect(attrs.alt).to.equal('man waving');
+    });
+
+    it('should not decodeHtmlEntities if decodeHtmlEntities options is false', function() {
+      var attrs = parse.evaluate(encodedAttributes, {
+        'decodeHtmlEntities': false 
+      })[0].attribs;
+      expect(attrs).to.be.ok();
+      expect(attrs['data-object']).to.equal('{&quot;foo&quot;:&quot;bar&quot;}');
+    });
+
+    it('should decodeHtmlEntities if decodeHtmlEntities options is true', function() {
+      var attrs = parse.evaluate(encodedAttributes, {
+        'decodeHtmlEntities': true 
+      })[0].attribs;
+      expect(attrs).to.be.ok();
+      expect(attrs['data-object']).to.equal('{"foo":"bar"}');
+    });
+
+    it('should decodeHtmlEntities by default', function() {
+      var attrs = parse.evaluate(encodedAttributes, defaultOpts)[0].attribs;
+      expect(attrs).to.be.ok();
+      expect(attrs['data-object']).to.equal('{"foo":"bar"}');
     });
 
     it('should handle value-less attributes: ' + noValueAttribute, function() {
