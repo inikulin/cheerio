@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "parse5": "^1.4.2",
-        "CSSselect": "~0.4.0",
+        "css-select": "^1.2.0",
         "lodash": "~2.4.1",
         "domutils": "1.5"
     },
