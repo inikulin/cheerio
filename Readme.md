@@ -1,5 +1,5 @@
 # :warning: THIS PACKAGES IS NO LONGER MAINTAINED :warning:
-If you are interested in using cheerio with parse5 you can vote for the this issue in the cheerio repo: https://github.com/cheeriojs/cheerio/issues/863
+If you are interested in using cheerio with parse5 you can vote for this issue in the cheerio repo: https://github.com/cheeriojs/cheerio/issues/863
 
 # Whacko
 [![Build Status](https://api.travis-ci.org/inikulin/whacko.svg)](https://travis-ci.org/inikulin/whacko)
